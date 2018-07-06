@@ -1,30 +1,15 @@
-# johnnycache
-
-Simple cache implementations for Go
-
-* Expiry - A string, interface{} concurrent expiring cache
-
-__Getting Started__
-
-`go get -u github.com/xorith/johnnycache/expiry`
-
-`import "github.com/xorith/johnnycache/expiry"`
-
-__Example__
-
-```go
 package expiry_test
 
 import (
-	"time"
 	"fmt"
 	"github.com/xorith/johnnycache/expiry"
+	"time"
 )
 
 func ExampleCache_LoadAsString() {
 	c := expiry.New()
 	c.Store("key", "Johnny Cache", time.Minute) // Store the value
-	v, ok := c.LoadAsString("key") // LoadAsString performs type-checking for you
+	v, ok := c.LoadAsString("key")              // LoadAsString performs type-checking for you
 	if ok {
 		fmt.Println(v)
 	}
@@ -57,4 +42,3 @@ func ExampleCache_Sweep() {
 	// 999
 	// 0
 }
-```
