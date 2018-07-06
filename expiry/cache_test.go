@@ -82,16 +82,16 @@ func TestConcurrency(t *testing.T) {
 	assert := assertion.New(t)
 	c := expiry.New()
 	assert.NotNil(c)
-	for i := 0; i < 100; i++ {
-		go func(i int) {
-			key, val := fmt.Sprintf("key%d", i), "test"
-			time.Sleep(time.Duration(i) * time.Millisecond)
-			c.Store(key, val, time.Millisecond*100*time.Duration(i))
+	for i := 0; i < 1000; i++ {
+		go func(x int) {
+			key, val := fmt.Sprintf("key%d", x), "test"
+			time.Sleep(time.Duration(x) * time.Millisecond)
+			c.Store(key, val, time.Millisecond*100*time.Duration(x))
 			c.Sweep()
 			result, ok := c.LoadAsString(key)
 			assert.True(ok, "expected result to be in expiry")
 			assert.Equal(val, result)
-			time.Sleep(time.Millisecond*100*time.Duration(i) + 100)
+			time.Sleep(time.Millisecond*100*time.Duration(x) + 100)
 			_, ok = c.LoadAsString(key)
 			assert.False(ok, "should be expired by now")
 		}(i)
