@@ -1,5 +1,9 @@
 # johnnycache
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/xorith/johnnycache)](https://goreportcard.com/report/github.com/xorith/johnnycache)
+[![GoDoc](https://godoc.org/github.com/xorith/johnnycache/expiry?status.svg)](https://godoc.org/github.com/xorith/johnnycache/expiry)
+[![Build Status](https://travis-ci.org/xorith/johnnycache.svg?branch=master)](https://travis-ci.org/xorith/johnnycache)
+
 Simple cache implementations for Go
 
 * Expiry - A string, interface{} concurrent expiring cache

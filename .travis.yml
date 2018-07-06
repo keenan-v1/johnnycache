@@ -1,0 +1,13 @@
+language: go
+
+branches:
+  only:
+  - master
+
+go:
+- "1.x"
+
+script:
+- go test -v ./...
+- go vet ./...
+- diff -u <(echo -n) <(gofmt -d -s .)
