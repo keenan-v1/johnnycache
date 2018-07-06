@@ -12,13 +12,13 @@ type member struct {
 	Expiration time.Time
 }
 
-// Cache is a concurrent string key, string value expiring cache
+// Cache is a concurrent key/value expiring cache
 type Cache struct {
 	sync.RWMutex
 	internal map[string]member
 }
 
-// New returns a new type-safe string key/value concurrent expiring cache
+// New returns a new key/value concurrent expiring cache
 func New() *Cache {
 	return &Cache{
 		internal: make(map[string]member),

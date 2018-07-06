@@ -13,7 +13,7 @@ __Getting Started__
 __Example__
 
 ```go
-package expiry_test
+package main
 
 import (
 	"time"
@@ -21,7 +21,7 @@ import (
 	"github.com/xorith/johnnycache/expiry"
 )
 
-func ExampleCache_LoadAsString() {
+func main() {
 	c := expiry.New()
 	c.Store("key", "Johnny Cache", time.Minute) // Store the value
 	v, ok := c.LoadAsString("key") // LoadAsString performs type-checking for you
@@ -29,10 +29,8 @@ func ExampleCache_LoadAsString() {
 		fmt.Println(v)
 	}
 	// Output: Johnny Cache
-}
 
-func ExampleCache_Sweep() {
-	c := expiry.New()
+	c = expiry.New()
 	for i := 0; i < 1000; i++ {
 		c.Store(fmt.Sprintf("key %d", i), fmt.Sprintf("value %d", i), time.Nanosecond)
 	}
@@ -41,7 +39,7 @@ func ExampleCache_Sweep() {
 	fmt.Println(c.Count())
 
 	// Since the life span was set to a nanosecond, these elements should be expired now and Load will return false
-	_, ok := c.Load("key 1")
+	_, ok = c.Load("key 1")
 	if !ok {
 		fmt.Println("expired")
 	}
@@ -56,5 +54,7 @@ func ExampleCache_Sweep() {
 	// expired
 	// 999
 	// 0
+
 }
+
 ```
