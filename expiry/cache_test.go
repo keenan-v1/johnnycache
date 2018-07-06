@@ -3,9 +3,9 @@ package expiry_test
 import (
 	"fmt"
 	assertion "github.com/stretchr/testify/assert"
+	"github.com/xorith/johnnycache/expiry"
 	"testing"
 	"time"
-	"johnnycache/expiry"
 )
 
 func TestNew(t *testing.T) {
