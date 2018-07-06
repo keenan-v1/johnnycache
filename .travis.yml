@@ -7,7 +7,11 @@ branches:
 go:
 - "1.x"
 
+before_install:
+- go get github.com/mattn/goveralls
+
 script:
 - go test -v ./...
 - go vet ./...
 - diff -u <(echo -n) <(gofmt -d -s .)
+- $HOME/gopath/bin/goveralls -v -service=travis-ci -repotoken $COVERALLS_TOKEN
