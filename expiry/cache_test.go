@@ -5,18 +5,18 @@ import (
 	assertion "github.com/stretchr/testify/assert"
 	"testing"
 	"time"
-	cache "johnnycache/expiry"
+	"johnnycache/expiry"
 )
 
-func TestNewStringExpiryCache(t *testing.T) {
+func TestNew(t *testing.T) {
 	assert := assertion.New(t)
-	c := cache.NewExpiryCache()
+	c := expiry.New()
 	assert.NotNil(c)
 }
 
-func TestExpiryCache_Store(t *testing.T) {
+func TestCache_Store(t *testing.T) {
 	assert := assertion.New(t)
-	c := cache.NewExpiryCache()
+	c := expiry.New()
 	assert.NotNil(c)
 
 	key, val := "test_key", "test_val"
@@ -28,9 +28,9 @@ func TestExpiryCache_Store(t *testing.T) {
 	assert.Equal(val, result, "should be equal")
 }
 
-func TestExpiryCache_Load(t *testing.T) {
+func TestCache_Load(t *testing.T) {
 	assert := assertion.New(t)
-	c := cache.NewExpiryCache()
+	c := expiry.New()
 	assert.NotNil(c)
 
 	key, val := "test_key", "test_val"
@@ -45,9 +45,9 @@ func TestExpiryCache_Load(t *testing.T) {
 	assert.False(ok, "should have expired")
 }
 
-func TestExpiryCache_Delete(t *testing.T) {
+func TestCache_Delete(t *testing.T) {
 	assert := assertion.New(t)
-	c := cache.NewExpiryCache()
+	c := expiry.New()
 	assert.NotNil(c)
 
 	key, val := "test_key", "test_val"
@@ -61,9 +61,9 @@ func TestExpiryCache_Delete(t *testing.T) {
 	assert.False(ok, "should be deleted")
 }
 
-func TestExpiryCache_Sweep(t *testing.T) {
+func TestCache_Sweep(t *testing.T) {
 	assert := assertion.New(t)
-	c := cache.NewExpiryCache()
+	c := expiry.New()
 	assert.NotNil(c)
 
 	key, val := "test_key", "test_val"
@@ -80,7 +80,7 @@ func TestExpiryCache_Sweep(t *testing.T) {
 
 func TestConcurrency(t *testing.T) {
 	assert := assertion.New(t)
-	c := cache.NewExpiryCache()
+	c := expiry.New()
 	assert.NotNil(c)
 	for i := 0; i < 100; i++ {
 		go func() {
@@ -89,7 +89,7 @@ func TestConcurrency(t *testing.T) {
 			c.Store(key, val, time.Millisecond*100*time.Duration(i))
 			c.Sweep()
 			result, ok := c.LoadAsString(key)
-			assert.True(ok, "expected result to be in cache")
+			assert.True(ok, "expected result to be in expiry")
 			assert.Equal(val, result)
 			time.Sleep(time.Millisecond*100*time.Duration(i) + 100)
 			_, ok = c.LoadAsString(key)

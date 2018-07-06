@@ -12,21 +12,21 @@ type member struct {
 	Expiration time.Time
 }
 
-// ExpiryCache is a concurrent string key, string value expiring cache
-type ExpiryCache struct {
+// Cache is a concurrent string key, string value expiring cache
+type Cache struct {
 	sync.RWMutex
 	internal map[string]member
 }
 
-// NewExpiryCache returns a new type-safe string key/value concurrent expiring cache
-func NewExpiryCache() *ExpiryCache {
-	return &ExpiryCache{
+// New returns a new type-safe string key/value concurrent expiring cache
+func New() *Cache {
+	return &Cache{
 		internal: make(map[string]member),
 	}
 }
 
 // Load fetches an element by key. If the element has expired or does not exist, it returns false
-func (c *ExpiryCache) Load(key string) (value interface{}, ok bool) {
+func (c *Cache) Load(key string) (value interface{}, ok bool) {
 	c.RLock()
 	v, ok := c.internal[key]
 	c.RUnlock()
@@ -42,7 +42,7 @@ func (c *ExpiryCache) Load(key string) (value interface{}, ok bool) {
 }
 
 // LoadAsString fetches an element by key. If the element has expired, does not exist or is not a string, it returns false
-func (c *ExpiryCache) LoadAsString(key string) (value string, ok bool) {
+func (c *Cache) LoadAsString(key string) (value string, ok bool) {
 	v, ok := c.Load(key)
 	if !ok {
 		return
@@ -52,14 +52,14 @@ func (c *ExpiryCache) LoadAsString(key string) (value string, ok bool) {
 }
 
 // Delete removes an element by key
-func (c *ExpiryCache) Delete(key string) {
+func (c *Cache) Delete(key string) {
 	c.Lock()
 	delete(c.internal, key)
 	c.Unlock()
 }
 
 // Store stores a single element with a specified lifespan duration
-func (c *ExpiryCache) Store(key string, value interface{}, lifespan time.Duration) {
+func (c *Cache) Store(key string, value interface{}, lifespan time.Duration) {
 	c.Lock()
 	c.internal[key] = member{
 		Key:        key,
@@ -70,7 +70,7 @@ func (c *ExpiryCache) Store(key string, value interface{}, lifespan time.Duratio
 }
 
 // Count returns a count of all elements
-func (c *ExpiryCache) Count() int {
+func (c *Cache) Count() int {
 	c.RLock()
 	count := len(c.internal)
 	c.RUnlock()
@@ -78,7 +78,7 @@ func (c *ExpiryCache) Count() int {
 }
 
 // Sweep marks and then sweeps expired elements
-func (c *ExpiryCache) Sweep() {
+func (c *Cache) Sweep() {
 	var mark []string
 	c.RLock()
 	for k, v := range c.internal {
