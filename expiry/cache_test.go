@@ -2,8 +2,8 @@ package expiry_test
 
 import (
 	"fmt"
+	"github.com/keenan-v1/johnnycache/expiry"
 	assertion "github.com/stretchr/testify/assert"
-	"github.com/xorith/johnnycache/expiry"
 	"testing"
 	"time"
 )

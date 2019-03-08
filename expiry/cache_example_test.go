@@ -2,7 +2,7 @@ package expiry_test
 
 import (
 	"fmt"
-	"github.com/xorith/johnnycache/expiry"
+	"github.com/keenan-v1/johnnycache/expiry"
 	"time"
 )
 

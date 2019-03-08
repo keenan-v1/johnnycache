@@ -23,7 +23,7 @@ package main
 import (
 	"time"
 	"fmt"
-	"github.com/xorith/johnnycache/expiry"
+	"github.com/keenan-v1/johnnycache/expiry"
 )
 
 func main() {
