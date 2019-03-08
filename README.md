@@ -11,9 +11,9 @@ Simple cache implementations for Go
 
 __Getting Started__
 
-`go get -u github.com/xorith/johnnycache/expiry`
+`go get -u github.com/keenan-v1/johnnycache/expiry`
 
-`import "github.com/xorith/johnnycache/expiry"`
+`import "github.com/keenan-v1/johnnycache/expiry"`
 
 __Example__
 
